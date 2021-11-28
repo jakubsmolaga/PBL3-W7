@@ -13,5 +13,5 @@ def index():
 
 
 if __name__ == '__main__':
-    api.add_resource(LED, '/')
+    api.add_resource(LED, '/led')
     app.run(debug=True)
