@@ -15,6 +15,8 @@
 
     <script>
         const change_rgb = () => {
+            const [r, g, b] = [10, 100, 200]
+            const body = JSON.stringify({ r, g, b })
             fetch('/led', { method: 'POST' })
         }
     </script>

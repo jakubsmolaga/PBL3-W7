@@ -35,3 +35,4 @@ class LED(Resource):
         if args.b != None:
             pins['b'].value = args.b / 255.0
         logging.info(f'Color changed to {self.get()}')
+        return self.get()
