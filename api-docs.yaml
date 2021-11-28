@@ -3,7 +3,6 @@ info:
   description: "This is a simple API for controlling RGB LEDs."
   version: "1.0.0"
   title: "LED Control API"
-host: "petstore.swagger.io"
 tags:
 - name: "led"
   description: "Accessing the LED"
