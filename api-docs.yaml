@@ -1,0 +1,63 @@
+swagger: "2.0"
+info:
+  description: "This is a simple API for controlling RGB LEDs."
+  version: "1.0.0"
+  title: "LED Control API"
+host: "petstore.swagger.io"
+tags:
+- name: "led"
+  description: "Accessing the LED"
+paths:
+  /led:
+    post:
+      tags:
+      - "led"
+      summary: "Updates LED status"
+      description: "Updates RGB values that define LEDs color. After update it returns the new LED color."
+      operationId: "changeColor"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/Color"
+      responses:
+        "200":
+          description: "Operation Successfull. New color returned."
+          schema:
+            $ref: "#/definitions/Color"
+        "400":
+          description: "Invalid data. Can occur if one of the rgb values is not an integer in range 0-255"
+        "500":
+          description: "Unexpected error. Please contact the administrator."
+    get:
+      tags:
+      - "led"
+      summary: "Return current LED status"
+      description: "Returns current RGB values that define LEDs color."
+      operationId: "getColor"
+      responses:
+        "200":
+          description: "Operation Successfull"
+          schema:
+            $ref: "#/definitions/Color"
+        "500":
+          description: "Unexpected error. Please contact the administrator."
+
+definitions:
+  Color:
+    type: "object"
+    properties:
+      r:
+        type: "integer"
+        description: "Red component of the color (0-255)"
+      g:
+        type: "integer"
+        description: "Green component of the color (0-255)"
+      b:
+        type: "integer"
+        description: "Blue component of the color (0-255)"
