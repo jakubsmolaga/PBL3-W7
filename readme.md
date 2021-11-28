@@ -24,11 +24,15 @@ cd PBL3-W7
 ```
 source venv/bin/activate
 ```
-6. Start the server
+6. Start GPIO Deamon
+```
+sudo pigpiod
+```
+7. Start the server
 ```
 python3 app.py
 ```
-7. Open `http://<your rpi ip>:5000/` in your web browser
+8. Open `http://<your rpi ip>:5000/` in your web browser
 
 ## Documentation
 API documentation can be found at: https://smolagakuba.github.io/PBL3-W7
