@@ -46,6 +46,17 @@ paths:
             $ref: "#/definitions/Color"
         "500":
           description: "Unexpected error. Please contact the administrator."
+    delete:
+      tags:
+      - "led"
+      summary: "Resets LED back to black"
+      description: "Changes LED color to black (0,0,0)."
+      operationId: "resetColor"
+      responses:
+        "200":
+          description: "Operation Successfull"
+        "500":
+          description: "Unexpected error. Please contact the administrator."
 
 definitions:
   Color:
