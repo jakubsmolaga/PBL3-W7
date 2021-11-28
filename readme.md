@@ -29,3 +29,6 @@ source venv/bin/activate
 python3 app.py
 ```
 7. Open `http://<your rpi ip>:5000/` in your web browser
+
+## Documentation
+API documentation can be found at: https://smolagakuba.github.io/PBL3-W7
