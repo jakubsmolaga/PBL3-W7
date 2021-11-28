@@ -24,3 +24,8 @@ jobs:
           output: docs/output/
           version: ^3.0.0
           spec-file: docs/api-docs.yaml
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: Api Docs
+          path: docs/output
