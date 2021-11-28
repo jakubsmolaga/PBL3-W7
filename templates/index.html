@@ -3,21 +3,105 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css">
     <title>LED Control Panel</title>
+    <style>
+        input[type="range"] {
+            padding: 0;
+        }
+    </style>
 </head>
 
-<body>
+<!-- Body is only shown when the color is downloaded from the server -->
 
-    <h1>Hello Flask!</h1>
-    <button onclick="change_rgb()">Click Here!</button>
+<body style="text-align: center;" hidden="true">
+
+    <!-- Title -->
+    <h1 id="title">LED Control Panel</h1>
+
+    <!-- Sliders -->
+    <label>Red: <b id="r-val"></b></label>
+    <input type="range" min="0" max="255" id="r">
+    <label>Green: <b id="g-val"></b></label>
+    <input type="range" min="0" max="255" id="g">
+    <label>Blue: <b id="b-val"></b></label>
+    <input type="range" min="0" max="255" id="b">
+    <br>
+
+    <!-- Color picker -->
+    <input type="color" id="color" style="padding: 0;">
+    <br>
+
+    <!-- Submit button -->
+    <button onclick="sendColor()">Update LED</button>
 
     <script>
-        const change_rgb = () => {
-            const [r, g, b] = [10, 100, 200]
-            const body = JSON.stringify({ r, g, b })
-            fetch('/led', { method: 'POST', body })
+
+        /* -------------------------------------------------------------------------- */
+        /*                                    State                                   */
+        /* -------------------------------------------------------------------------- */
+
+        // Holds currently chosen color
+        let color = { r: 0, g: 0, b: 0 }
+
+        /* -------------------------------------------------------------------------- */
+        /*                                  Functions                                 */
+        /* -------------------------------------------------------------------------- */
+
+        // Sends localy chosen color to the server
+        const sendColor = async () =>
+            fetch('/led', {
+                method: 'POST',
+                body: JSON.stringify(color),
+                headers: { 'Content-Type': 'application/json' },
+            }).then(res => res.json())
+                .then(update)
+                .then(() => window.alert('Successfully updated the LED'))
+                .catch(() => window.alert('An unexpected error occured. Check your connection and try again later.'))
+
+        // Simple shortcut for document.getElementById
+        const getEle = id => document.getElementById(id)
+
+        // Converts hex colors (#xxxxxx) to rgb object ({ r:x, g:x, b:x })
+        const hexToRGB = (hex) => {
+            const num = parseInt(hex.slice(1), 16);
+            return { r: (num >> 16) & 255, g: (num >> 8) & 255, b: num & 255 }
+        }
+
+        // Converts rgb object ({ r:x, g:x, b:x }) to hex color (#xxxxxx)
+        const rgbToHex = ({ r, g, b }) => {
+            const hex = (x) => x.toString(16).padStart(2, '0')
+            return '#' + hex(r) + hex(g) + hex(b)
+        }
+
+        // Changes current state and updates the UI
+        const update = (updates) => {
+            color = { ...color, ...updates };
+            getEle('color').value = rgbToHex(color);                                    // Update color picker
+            getEle('title').style.color = rgbToHex(color);                              // Update title color
+            (['r', 'g', 'b']).forEach(c => (getEle(c).value = color[c]));               // Update sliders
+            (['r', 'g', 'b']).forEach(c => (getEle(`${c}-val`).innerText = color[c]));  // Update labels
+        }
+
+        /* -------------------------------------------------------------------------- */
+        /*                                    Setup                                   */
+        /* -------------------------------------------------------------------------- */
+
+        window.onload = () => {
+
+            // Setup event listeners
+            getEle('r').oninput = e => update({ r: parseInt(e.target.value) });
+            getEle('g').oninput = e => update({ g: parseInt(e.target.value) });
+            getEle('b').oninput = e => update({ b: parseInt(e.target.value) });
+            getEle('color').oninput = e => update(hexToRGB(e.target.value));
+
+            // Download current color
+            fetch('/led')
+                .then(res => res.json())
+                .then(update)
+                .catch(() => alert('Failed to download current color'))
+                .then(() => document.body.hidden = false)
         }
     </script>
 </body>
