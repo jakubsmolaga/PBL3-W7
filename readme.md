@@ -6,7 +6,7 @@
 This is a school project demonstrating basics of REST API and web user interfaces. Project contains a simple server application that controls RGB LED and serves its functionality as a REST API. Additionaly the server also serves a simple, easy to use html interface.
 
 ## Quickstart
-1. Connect your Raspberry Pi according to the following schematic:
+1. Connect your Raspberry Pi according to the following schematic:  
 ![Alt](/img/schematic.jpg)
 2. SSH into your Raspberry Pi
 ```
