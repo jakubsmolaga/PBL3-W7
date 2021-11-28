@@ -11,7 +11,13 @@
 <body>
 
     <h1>Hello Flask!</h1>
+    <button onclick="change_rgb()">Click Here!</button>
 
+    <script>
+        const change_rgb = () => {
+            fetch('/led', { method: 'POST' })
+        }
+    </script>
 </body>
 
 </html>
