@@ -36,3 +36,8 @@ class LED(Resource):
             pins['b'].value = args['b'] / 255.0
         logging.info(f'Color changed to {self.get()}')
         return self.get()
+
+    def delete(self):
+        pins['r'].value = 0
+        pins['g'].value = 0
+        pins['b'].value = 0
