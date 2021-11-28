@@ -1,13 +1,13 @@
 # RGB LED Control Server
 
-![Alt Text](/img/demo.gif)
+![Alt Text](/docs/demo.gif)
 
 ## Description
 This is a school project demonstrating basics of REST API and web user interfaces. Project contains a simple server application that controls RGB LED and serves its functionality as a REST API. Additionaly the server also serves a simple, easy to use html interface.
 
 ## Quickstart
 1. Connect your Raspberry Pi according to the following schematic:  
-![Alt](/img/schematic.jpg)
+![Alt](/docs/schematic.jpg)
 2. SSH into your Raspberry Pi
 ```
 ssh pi@<your rpi ip>
