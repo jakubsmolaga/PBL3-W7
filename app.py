@@ -7,7 +7,7 @@ app = Flask(__name__)
 api = Api(app)
 
 
-@app.get('/')
+@app.route('/')
 def index():
     return render_template("index")
 
